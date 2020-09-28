@@ -98,31 +98,13 @@ public class CredentialTests {
     public void testDelete() throws InterruptedException {
         credentialPage.deleteCredential(driver);
         resultPage.clickOnSuccess(driver);
+        credentialPage.clickCredentialTab(driver);
         String resultUrl = credentialPage.getDisplayUrl(driver);
         String resultUsername = credentialPage.getDisplayUsername(driver);
         String resultPassword = credentialPage.getDisplayPassword(driver);
         Assertions.assertEquals(null, resultUrl);
         Assertions.assertEquals(null, resultUsername);
         Assertions.assertEquals(null, resultPassword);
-        String expectedUrl = "title";
-        String expectedPassword = "password";
-        String expectedUsername = "username";
-        credentialPage.clickCredentialTab(driver);
-        for(int i = 0; i<2; i++) {
-            credentialPage.addCredential(driver, expectedUsername, expectedPassword, expectedUrl);
-            resultPage.clickOnSuccess(driver);
-        }
-        credentialPage.deleteCredential(driver);
-        resultPage.clickOnSuccess(driver);
-        credentialPage.deleteCredential(driver);
-        resultPage.clickOnSuccess(driver);
-        credentialPage.clickCredentialTab(driver);
-        resultUsername = credentialPage.getDisplayUsername(driver);
-        resultPassword = credentialPage.getDisplayPassword(driver);
-        resultUrl = credentialPage.getDisplayUrl(driver);
-        Assertions.assertEquals(null, resultUsername);
-        Assertions.assertEquals(null, resultPassword);
-        Assertions.assertEquals(null, resultUrl);
     }
 
     @Test

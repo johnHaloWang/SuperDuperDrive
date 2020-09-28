@@ -123,14 +123,14 @@ public class CredentialPage {
 
     public void deleteCredential(WebDriver driver){
         this.clickCredentialTab(driver);
-        WebDriverWait wait = new WebDriverWait(driver, 30);
+        WebDriverWait wait = new WebDriverWait(driver, 40);
         WebElement deleteBtn = wait.until(webDriver->webDriver.findElement(By.id("credential-delete-btn")));
 
         try {
             wait.until(ExpectedConditions.visibilityOf(deleteBtn)).click();
             deleteBtn.click();
         } catch (Exception e) {
-            LOGGER.debug(CredentialPage.TAG_ + " Error occur on add credential, the 'delete-credential-btn' was not visible");
+            LOGGER.debug(CredentialPage.TAG_ + " Error occur on delete credential, the 'delete-credential-btn' was not visible");
         }
     }
 
@@ -155,7 +155,6 @@ public class CredentialPage {
         credentialPasswordInput.sendKeys(password);
         credentialUrlInput.clear();
         credentialUrlInput.sendKeys(url);
-//        saveBtn.click();
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         executor.executeScript("arguments[0].click();", saveBtn);
 
