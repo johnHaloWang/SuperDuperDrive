@@ -1,6 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage.mapper;
 
-import com.udacity.jwdnd.course1.cloudstorage.model.File;
+import com.udacity.jwdnd.course1.cloudstorage.model.*;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -23,24 +23,31 @@ public interface FileMapper extends Rule {
 
     String deleteAllSql = "DELETE FROM FILES";
 
+
     @Select(duplicateFileSql)
     File isDuplicateFile(int userId, String filename);
 
-    @Override
     @Delete(deleteAllSql)
     int deleteAll();
 
-    @Override
     @Delete(deleteFileByNoteIdSql)
     int delete(Integer itemId);
 
-    @Override
     @Select(getFilesByUserIdSql)
     List<File> getAll(Integer userId);
 
-    @Override
     @Select(getFileByFileIdSql)
     File getItemByItemId(Integer fileId);
+
+    @Override
+    @Insert(insertFileSql)
+    @Options(useGeneratedKeys = true, keyProperty = "fileId")
+    int insert(Object add);
+
+    @Override
+    @Update(updateFileByNoteObjectSql)
+    int update(Object update);
+
 
 
 }

@@ -1,7 +1,9 @@
 package com.udacity.jwdnd.course1.cloudstorage.mapper;
 
-import com.udacity.jwdnd.course1.cloudstorage.model.User;
+import com.udacity.jwdnd.course1.cloudstorage.model.*;
 import org.apache.ibatis.annotations.*;
+
+import java.util.List;
 
 @Mapper
 public interface UserMapper extends Rule {
@@ -14,12 +16,15 @@ public interface UserMapper extends Rule {
     @Select(getUserByUsernameSql)
     User getUser(String username);
 
-    @Override
     @Delete(deleteByIdSql)
     int delete(Integer userId);
 
-    @Override
     @Delete((deleteAllSql))
     int deleteAll();
+
+    @Override
+    @Insert(insertByUserObjSql)
+    @Options(useGeneratedKeys = true, keyProperty = "userId")
+    int insert(Object add);
 
 }
