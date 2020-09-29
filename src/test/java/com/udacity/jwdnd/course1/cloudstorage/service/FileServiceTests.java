@@ -6,6 +6,7 @@ import com.udacity.jwdnd.course1.cloudstorage.model.User;
 import com.udacity.jwdnd.course1.cloudstorage.services.FileService;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
 import com.udacity.jwdnd.course1.cloudstorage.utils.TestConstant;
+import org.apache.tomcat.util.http.fileupload.impl.SizeLimitExceededException;
 import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,7 +66,7 @@ public class FileServiceTests {
     }
 
     @Test
-    public void testGetFilesByUserId() throws IOException {
+    public void testGetFilesByUserId() throws IOException{
         int addRow = fileService.addFile(TestConstant.getMultipartFile(TestConstant.fileName1), user.getUserId());
         Assertions.assertEquals(1, addRow);
         List<File> list = fileService.getFilesByUserId(user.getUserId());
@@ -73,7 +74,7 @@ public class FileServiceTests {
     }
 
     @Test
-    public void testGetFile() throws IOException {
+    public void testGetFile() throws IOException{
         int addRow = fileService.addFile(TestConstant.getMultipartFile(TestConstant.fileName1), user.getUserId());
         Assertions.assertEquals(1, addRow);
         List<File> list = fileService.getFilesByUserId(user.getUserId());
@@ -95,7 +96,7 @@ public class FileServiceTests {
     }
 
     @Test
-    public void testDeleteNoteById() throws IOException {
+    public void testDeleteNoteById() throws IOException, SizeLimitExceededException {
         fileService.addFile(TestConstant.getMultipartFile(TestConstant.fileName1), user.getUserId());
         int fileId = fileService.getFilesByUserId(user.getUserId()).get(0).getFileId();
         int deleteRow = fileService.deleteFile(fileId);
@@ -104,7 +105,7 @@ public class FileServiceTests {
     }
 
     @Test
-    public void testDeleteAll() throws IOException {
+    public void testDeleteAll() throws IOException, SizeLimitExceededException {
         int expected = 3;
         for(int i = 0; i<expected; i++)
             fileService.addFile(TestConstant.getMultipartFile(TestConstant.fileName1), user.getUserId());
@@ -112,7 +113,7 @@ public class FileServiceTests {
     }
 
     @Test
-    public void testDuplicatFunction() throws  IOException{
+    public void testDuplicatFunction() throws  IOException, SizeLimitExceededException{
         fileService.addFile(TestConstant.getMultipartFile(TestConstant.fileName1), user.getUserId());
         Assertions.assertTrue(fileService.isDupicateFileName(user.getUserId(), TestConstant.fileName1));
         Assertions.assertFalse(fileService.isDupicateFileName(user.getUserId(), TestConstant.fileName2));
