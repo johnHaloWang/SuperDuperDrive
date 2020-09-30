@@ -1,6 +1,7 @@
 package com.udacity.jwdnd.course1.cloudstorage;
 
 import com.udacity.jwdnd.course1.cloudstorage.pages.*;
+import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
 import com.udacity.jwdnd.course1.cloudstorage.utils.TestConstant;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
@@ -8,14 +9,27 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.junit.jupiter.api.TestMethodOrder;
+
 
 import java.util.Locale;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class CredentialTests {
+    @Autowired
+    private UserService userService;
+
     @LocalServerPort
     private int port;
 
@@ -30,9 +44,13 @@ public class CredentialTests {
     private CredentialPage credentialPage;
 
     @BeforeAll
-    static void beforeAll() throws InterruptedException {
+    void beforeAll() throws InterruptedException {
         Locale.setDefault(new Locale("en","US"));
         WebDriverManager.chromedriver().setup();
+        int addRow = userService.createUser(TestConstant.getUser());
+        Assertions.assertEquals(1, addRow);
+
+
     }
 
     @BeforeEach
@@ -42,11 +60,11 @@ public class CredentialTests {
         driver.get(CredentialTests.BASEURL+
                 TestConstant.SIGNUP_URL);
 
-        signupPage = new SignupPage(driver);
+ //       signupPage = new SignupPage(driver);
         credentialPage = new CredentialPage(driver);
         resultPage = new ResultPage(driver);
 
-        signupPage.signup(TestConstant.FIRST_NAME, TestConstant.LAST_NAME, TestConstant.USERNAME, TestConstant.PASSWORD);
+        //signupPage.signup(TestConstant.FIRST_NAME, TestConstant.LAST_NAME, TestConstant.USERNAME, TestConstant.PASSWORD);
 
         driver.get(CredentialTests.BASEURL+
                 TestConstant.LOGIN_URL);
@@ -64,7 +82,7 @@ public class CredentialTests {
     }
 
     @AfterAll
-    static void aferAll(){
+    void afterAll(){
 
     }
 

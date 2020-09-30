@@ -1,6 +1,10 @@
 package com.udacity.jwdnd.course1.cloudstorage;
 
+import ch.qos.logback.core.spi.LifeCycle;
+import com.udacity.jwdnd.course1.cloudstorage.mapper.UserMapper;
+import com.udacity.jwdnd.course1.cloudstorage.model.User;
 import com.udacity.jwdnd.course1.cloudstorage.pages.*;
+import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
 import com.udacity.jwdnd.course1.cloudstorage.utils.TestConstant;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
@@ -8,15 +12,28 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
+
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.junit.jupiter.api.TestMethodOrder;
+
 
 import java.util.Locale;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@TestInstance(Lifecycle.PER_CLASS)
 public class NoteTests {
 
+    @Autowired
+    private UserService userService;
     @LocalServerPort
     private int port;
 
@@ -28,35 +45,34 @@ public class NoteTests {
     private SignupPage signupPage;
     private ResultPage resultPage;
     private NotePage notePage;
-    LoginPage loginPage;
+    private static User user;
+    private LoginPage loginPage;
+
+    public NoteTests() {
+    }
+
 
     @BeforeAll
-    static void beforeAll() throws InterruptedException {
+    void beforeAll() throws InterruptedException {
         Locale.setDefault(new Locale("en","US"));
         WebDriverManager.chromedriver().setup();
-
+        int addRow = userService.createUser(TestConstant.getUser());
+        Assertions.assertEquals(1, addRow);
     }
 
     @BeforeEach
     public void beforeEach() throws InterruptedException {
         BASEURL = TestConstant.LOCALHOST + port;
         driver = new ChromeDriver();
-        driver.get(NoteTests.BASEURL+
-                TestConstant.SIGNUP_URL);
-
-        signupPage = new SignupPage(driver);
         notePage = new NotePage(driver);
         resultPage = new ResultPage(driver);
-
-        signupPage.signup(TestConstant.FIRST_NAME, TestConstant.LAST_NAME, TestConstant.USERNAME, TestConstant.PASSWORD);
-        Thread.sleep(3000);
-
         driver.get(NoteTests.BASEURL+
                 TestConstant.LOGIN_URL);
         loginPage = new LoginPage(driver);
 
         loginPage.login(driver, TestConstant.USERNAME, TestConstant.PASSWORD);
         Thread.sleep(3000);
+
 
     }
 
@@ -67,7 +83,7 @@ public class NoteTests {
         }
     }
     @AfterAll
-    static void aferAll(){
+    void afterAll(){
 
     }
 
@@ -87,7 +103,7 @@ public class NoteTests {
     }
 
     @Test
-    @Order(1)
+    @Order(2)
     public void testDeleteNote() throws InterruptedException {
         notePage.deleteNote(driver);
         resultPage.clickOnSuccess(driver);
