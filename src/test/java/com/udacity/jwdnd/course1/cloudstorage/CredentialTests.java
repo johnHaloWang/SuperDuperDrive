@@ -4,6 +4,7 @@ import com.udacity.jwdnd.course1.cloudstorage.pages.*;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
 import com.udacity.jwdnd.course1.cloudstorage.utils.TestConstant;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -23,6 +24,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 
 import java.util.Locale;
 
+@Slf4j
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -60,11 +62,8 @@ public class CredentialTests {
         driver.get(CredentialTests.BASEURL+
                 TestConstant.SIGNUP_URL);
 
- //       signupPage = new SignupPage(driver);
         credentialPage = new CredentialPage(driver);
         resultPage = new ResultPage(driver);
-
-        //signupPage.signup(TestConstant.FIRST_NAME, TestConstant.LAST_NAME, TestConstant.USERNAME, TestConstant.PASSWORD);
 
         driver.get(CredentialTests.BASEURL+
                 TestConstant.LOGIN_URL);

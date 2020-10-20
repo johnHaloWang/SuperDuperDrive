@@ -2,7 +2,6 @@ package com.udacity.jwdnd.course1.cloudstorage.mapper;
 
 import com.udacity.jwdnd.course1.cloudstorage.model.*;
 import org.apache.ibatis.annotations.*;
-import org.apache.tomcat.util.http.fileupload.impl.SizeLimitExceededException;
 
 import java.util.List;
 

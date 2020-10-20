@@ -6,20 +6,19 @@ import com.udacity.jwdnd.course1.cloudstorage.pages.ResultPage;
 import com.udacity.jwdnd.course1.cloudstorage.pages.SignupPage;
 import com.udacity.jwdnd.course1.cloudstorage.utils.TestConstant;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
 import java.net.URL;
 import java.util.Locale;
-import java.util.NoSuchElementException;
 
+
+@Slf4j
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class FileTests {
@@ -28,7 +27,6 @@ public class FileTests {
 
     private WebDriver driver;
     public static String BASEURL;
-    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     public final static String TAG_ = "FileTests";
     private SignupPage signupPage;
     private ResultPage resultPage;
@@ -83,10 +81,11 @@ public class FileTests {
         ClassLoader classLoader = getClass().getClassLoader();
         String fileName = "testingFile.txt";
         URL resource = classLoader.getResource(fileName);
-        LOGGER.debug(TAG_ + " testing file: " + resource.getPath() );
+        log.debug(TAG_ + "-> testing file: " + resource.getPath() );
         String path = resource.getPath();
         path = (path.charAt(0)=='/')?path.substring(1, path.length()):path;
-        LOGGER.debug(TAG_ + " testing file: " + path );
+        //LOGGER.debug(TAG_ + " testing file: " + path );
+        log.debug(TAG_ + "-> testing file: " + path );
         filePage.addFile(driver, path);
         resultPage.clickOnSuccess(driver);
         Assertions.assertEquals(filePage.getFileName(driver), fileName);
@@ -95,7 +94,8 @@ public class FileTests {
     @Test
     @Order(2)
     public void testDeleteFile() throws InterruptedException {
-        LOGGER.debug(TAG_ + " Delete file");
+        //LOGGER.debug(TAG_ + " Delete file");
+        log.debug(TAG_ + "-> Delete file");
         filePage.deleteFile(driver);
         resultPage.clickOnSuccess(driver);
         Assertions.assertThrows(TimeoutException.class, () -> {

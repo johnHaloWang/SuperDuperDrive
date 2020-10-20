@@ -4,6 +4,7 @@ import com.udacity.jwdnd.course1.cloudstorage.model.File;
 import com.udacity.jwdnd.course1.cloudstorage.model.User;
 import com.udacity.jwdnd.course1.cloudstorage.utils.TestConstant;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.impl.SizeLimitExceededException;
 import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
@@ -16,10 +17,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+@Slf4j
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class FileMapperTests {
 
-    final private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     public final static String TAG_ = "FileMapperTest";
 
     private File test;

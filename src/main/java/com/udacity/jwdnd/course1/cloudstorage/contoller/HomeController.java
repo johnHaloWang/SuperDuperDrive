@@ -3,22 +3,20 @@ package com.udacity.jwdnd.course1.cloudstorage.contoller;
 import com.udacity.jwdnd.course1.cloudstorage.model.*;
 import com.udacity.jwdnd.course1.cloudstorage.services.*;
 import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+@Slf4j
 @Controller
 public class HomeController {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     public final static String TAG_ = "HomeController";
     private final NoteService noteService;
     private final UserService userService;
@@ -37,7 +35,7 @@ public class HomeController {
 
     @GetMapping(value = {"/", "/home"})
     public String homeView(Authentication authentication, Model model, HttpSession session){
-        LOGGER.debug(TAG_ +  " get method");
+        log.debug(TAG_ +  "-> get method");
 
         Integer userId = null;
         if(session.getAttribute("userId")==null){

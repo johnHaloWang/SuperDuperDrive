@@ -3,16 +3,16 @@ package com.udacity.jwdnd.course1.cloudstorage;
 import com.udacity.jwdnd.course1.cloudstorage.pages.*;
 import com.udacity.jwdnd.course1.cloudstorage.utils.TestConstant;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
 import java.util.Locale;
 
+@Slf4j
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class SignupAndLoginAndLogoutTests {
@@ -23,7 +23,7 @@ public class SignupAndLoginAndLogoutTests {
     private WebDriver driver;
 
     public static String BASEURL;
-    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+
     @BeforeAll
     static void beforeAll() {
         Locale.setDefault(new Locale("en","US"));
@@ -55,7 +55,7 @@ public class SignupAndLoginAndLogoutTests {
                 TestConstant.LOGIN_URL);
         LoginErrorPage loginErrorPage = new LoginErrorPage(driver);
         String msg = loginErrorPage.loginFailed(TestConstant.USERNAME, TestConstant.PASSWORD);
-        LOGGER.debug("TESTING LOGIN-USER FAILED: " + msg);
+        log.debug("TESTING LOGIN-USER FAILED: " + msg);
         Assertions.assertEquals(SignupAndLoginAndLogoutTests.BASEURL+ TestConstant.LOGIN_ERROR_URL, driver.getCurrentUrl());
         String expected = TestConstant.LOGIN_ERROR_MSG;
         Assertions.assertEquals(expected, msg);

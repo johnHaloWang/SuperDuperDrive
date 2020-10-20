@@ -6,6 +6,7 @@ import com.udacity.jwdnd.course1.cloudstorage.model.User;
 import com.udacity.jwdnd.course1.cloudstorage.services.NoteService;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
 import com.udacity.jwdnd.course1.cloudstorage.utils.TestConstant;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +17,9 @@ import org.springframework.boot.web.server.LocalServerPort;
 import java.util.List;
 import java.util.Locale;
 
+@Slf4j
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class NoteServiceTests {
-    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     public final static String TAG_ = "NoteServiceTest";
     private User user;
     private Note note;

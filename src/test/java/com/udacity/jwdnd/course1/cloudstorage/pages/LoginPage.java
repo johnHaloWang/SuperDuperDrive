@@ -1,17 +1,14 @@
 package com.udacity.jwdnd.course1.cloudstorage.pages;
 
-import com.udacity.jwdnd.course1.cloudstorage.services.HashService;
-import org.openqa.selenium.By;
-import org.openqa.selenium.ElementClickInterceptedException;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Slf4j
 public class LoginPage {
 
     @FindBy(id="inputUsername")
@@ -26,6 +23,7 @@ public class LoginPage {
     final private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     public final static String TAG_ = "LoginPage";
+
     public LoginPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }

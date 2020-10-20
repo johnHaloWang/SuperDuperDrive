@@ -2,8 +2,7 @@ package com.udacity.jwdnd.course1.cloudstorage.contoller;
 
 import com.udacity.jwdnd.course1.cloudstorage.model.User;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,12 +10,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+@Slf4j
 @Controller
 @RequestMapping("/signup")
 public class SignupController {
 
     private final UserService userService;
-    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     public final static String TAG_ = "SiginupController";
 
     public SignupController(UserService userService) {

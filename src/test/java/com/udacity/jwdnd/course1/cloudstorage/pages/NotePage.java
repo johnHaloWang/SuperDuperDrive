@@ -1,5 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage.pages;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -8,9 +9,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Slf4j
 public class NotePage {
-
-    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     public final static String TAG_ = "NotePage";
 
@@ -65,7 +65,7 @@ public class NotePage {
             wait.until(ExpectedConditions.visibilityOf(addBtn)).click();
             addBtn.click();
         }catch(ElementClickInterceptedException e){
-            LOGGER.debug(NotePage.TAG_ + " Error occur on add note, the 'show-note-btn' was not visible");
+            log.debug(NotePage.TAG_ + "-> Error occur on add note, the 'show-note-btn' was not visible");
         }
         WebElement noteTitleInput = wait.until(webDriver->webDriver.findElement(By.id("note-title")));
         WebElement noteDescriptionInput = wait.until(webDriver->webDriver.findElement(By.id("note-description")));
@@ -84,7 +84,7 @@ public class NotePage {
             wait.until(ExpectedConditions.visibilityOf(deleteBtn)).click();
             deleteBtn.click();
         } catch (Exception e) {
-            LOGGER.debug(NotePage.TAG_ + " Error occur on add note, the 'delete-note-btn' was not visible");
+            log.debug(NotePage.TAG_ + "-> Error occur on add note, the 'delete-note-btn' was not visible");
         }
    }
 
@@ -96,7 +96,7 @@ public class NotePage {
            wait.until(ExpectedConditions.visibilityOf(editBtn)).click();
            editBtn.click();
        }catch(Exception e){
-           LOGGER.debug(NotePage.TAG_ + " Error occur on edit note, the 'note-edit-btn' was not visible");
+           log.debug(NotePage.TAG_ + "-> Error occur on edit note, the 'note-edit-btn' was not visible");
        }
        WebElement noteTitleInput = wait.until(webDriver->webDriver.findElement(By.id("note-title")));
        WebElement noteDescriptionInput = wait.until(webDriver->webDriver.findElement(By.id("note-description")));
@@ -115,9 +115,9 @@ public class NotePage {
             wait.until(ExpectedConditions.visibilityOf(this.displayTitle));
             rst = this.displayTitle.getText();
         }catch(Exception e){
-            LOGGER.debug(NotePage.TAG_ +  "Error occur on get note title, the 'display-title' was not visible");
+            log.debug(NotePage.TAG_ +  "-> Error occur on get note title, the 'display-title' was not visible");
         }
-        LOGGER.debug(NotePage.TAG_ + " find title: " + rst);
+        log.debug(NotePage.TAG_ + "-> find title: " + rst);
         return rst;
     }
 
@@ -128,9 +128,9 @@ public class NotePage {
             wait.until(ExpectedConditions.visibilityOf(this.displayDescription));
             rst = this.displayDescription.getText();
         }catch(Exception e){
-            LOGGER.debug(NotePage.TAG_ + " Error occur on get note title, the 'display-descritpion' was not visible");
+            log.debug(NotePage.TAG_ + "-> Error occur on get note title, the 'display-descritpion' was not visible");
         }
-        LOGGER.debug(NotePage.TAG_ + " find description: " + rst);
+        log.debug(NotePage.TAG_ + "-> find description: " + rst);
         return rst;
     }
 

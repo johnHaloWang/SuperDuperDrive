@@ -1,5 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage.pages;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -8,8 +9,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Slf4j
 public class CredentialPage {
-    final private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     public final static String TAG_ = "CredentialPage";
 
     //nav-btn
@@ -48,8 +49,6 @@ public class CredentialPage {
     @FindBy(id="credential-display-password")
     private WebElement displayPassword;
 
-
-    //LOGGER.debug(FilePage.TAG_ + " find description: " + rst);
     public CredentialPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
@@ -70,9 +69,10 @@ public class CredentialPage {
             wait.until(ExpectedConditions.visibilityOf(this.displayUsername));
             rst = this.displayUsername.getText();
         }catch(Exception e){
-            LOGGER.debug(CredentialPage.TAG_ +  "Error occur on get credential username, the 'display-password' was not visible");
+            log.debug(TAG_ +  "-> Error occur on get credential username, the 'display-password' was not visible");
+
         }
-        LOGGER.debug(CredentialPage.TAG_ + " find username: " + rst);
+        log.debug(TAG_ + "-> find username: " + rst);
         return rst;
     }
 
@@ -83,9 +83,10 @@ public class CredentialPage {
             wait.until(ExpectedConditions.visibilityOf(this.displayUrl));
             rst = this.displayUrl.getText();
         }catch(Exception e){
-            LOGGER.debug(CredentialPage.TAG_ +  "Error occur on get credential url, the 'display-url' was not visible");
+            //LOGGER.debug(CredentialPage.TAG_ +  "Error occur on get credential url, the 'display-url' was not visible");
+            log.debug(TAG_ +  "-> Error occur on get credential url, the 'display-url' was not visible");
         }
-        LOGGER.debug(CredentialPage.TAG_ + " find url: " + rst);
+        log.debug(TAG_ + "-> find url: " + rst);
         return rst;
     }
 
@@ -96,9 +97,10 @@ public class CredentialPage {
             wait.until(ExpectedConditions.visibilityOf(this.displayPassword));
             rst = this.displayPassword.getText();
         }catch(Exception e){
-            LOGGER.debug(CredentialPage.TAG_ + " Error occur on get credential password, the 'display-password' was not visible");
+            log.debug(TAG_ + "-> Error occur on get credential password, the 'display-password' was not visible");
         }
-        LOGGER.debug(CredentialPage.TAG_ + " find password: " + rst);
+        //LOGGER.debug(CredentialPage.TAG_ + " find password: " + rst);
+        log.debug(TAG_ + "-> find password: " + rst);
         return rst;
     }
 
@@ -109,7 +111,7 @@ public class CredentialPage {
             wait.until(ExpectedConditions.visibilityOf(addBtn)).click();
             addBtn.click();
         }catch(ElementClickInterceptedException e){
-            LOGGER.debug(CredentialPage.TAG_ + " Error occur on add credential, the 'show-credential-btn' was not visible");
+            log.debug(TAG_ + "-> Error occur on add credential, the 'show-credential-btn' was not visible");
         }
         WebElement credentialUsernameInput = wait.until(webDriver->webDriver.findElement(By.id("credential-username")));
         WebElement credentialPasswordInput = wait.until(webDriver->webDriver.findElement(By.id("credential-password")));
@@ -130,7 +132,7 @@ public class CredentialPage {
             wait.until(ExpectedConditions.visibilityOf(deleteBtn)).click();
             deleteBtn.click();
         } catch (Exception e) {
-            LOGGER.debug(CredentialPage.TAG_ + " Error occur on delete credential, the 'delete-credential-btn' was not visible");
+            log.debug(TAG_ + "-> Error occur on delete credential, the 'delete-credential-btn' was not visible");
         }
     }
 
@@ -143,7 +145,8 @@ public class CredentialPage {
             wait.until(ExpectedConditions.visibilityOf(editBtn)).click();
             editBtn.click();
         }catch(ElementClickInterceptedException e){
-            LOGGER.debug(CredentialPage.TAG_ + " Error occur on edit credential, the 'credential-edit-btn' was not visible");
+            //LOGGER.debug(CredentialPage.TAG_ + " Error occur on edit credential, the 'credential-edit-btn' was not visible");
+            log.debug(TAG_ + "-> Error occur on edit credential, the 'credential-edit-btn' was not visible");
         }
         WebElement credentialUsernameInput = wait.until(webDriver->webDriver.findElement(By.id("credential-username")));
         WebElement credentialPasswordInput = wait.until(webDriver->webDriver.findElement(By.id("credential-password")));
@@ -167,7 +170,7 @@ public class CredentialPage {
             wait.until(ExpectedConditions.visibilityOf(closeBtn)).click();
             closeBtn.click();
         }catch(ElementClickInterceptedException e){
-            LOGGER.debug(CredentialPage.TAG_ + " Error occur on edit credential, the 'credential-close-btn' was not visible");
+            log.debug(TAG_ + "-> Error occur on edit credential, the 'credential-close-btn' was not visible");
         }
     }
 
@@ -178,7 +181,7 @@ public class CredentialPage {
             wait.until(ExpectedConditions.visibilityOf(editBtn)).click();
             editBtn.click();
         }catch(Exception e){
-            LOGGER.debug(CredentialPage.TAG_ + " Error occur on edit credential, the 'credential-edit-btn' was not visible");
+            log.debug(CredentialPage.TAG_ + "-> Error occur on edit credential, the 'credential-edit-btn' was not visible");
         }
         WebElement credentialPasswordInput = wait.until(webDriver->webDriver.findElement(By.id("credential-password")));
         WebElement closeBtn = wait.until(webDriver->webDriver.findElement(By.id("credential-close-btn")));

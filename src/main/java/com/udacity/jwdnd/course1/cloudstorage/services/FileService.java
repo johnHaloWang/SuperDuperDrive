@@ -2,9 +2,7 @@ package com.udacity.jwdnd.course1.cloudstorage.services;
 
 import com.udacity.jwdnd.course1.cloudstorage.mapper.FileMapper;
 import com.udacity.jwdnd.course1.cloudstorage.model.*;
-import org.apache.tomcat.util.http.fileupload.impl.SizeLimitExceededException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,10 +10,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
+@Slf4j
 @Service
 public class FileService {
     private FileMapper fileMapper;
-    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     public final static String TAG_ = "FileService";
 
     @Autowired
@@ -25,7 +23,7 @@ public class FileService {
 
     public int addFile(MultipartFile fileUpload, int userId) throws IOException{
         File file = new File(fileUpload, userId);
-        LOGGER.debug(TAG_ + "  file detail check:  " + file.toString());
+        log.debug(TAG_ +  "->  file detail check:  " + file.toString());
         return fileMapper.insert(file);
     }
 

@@ -2,8 +2,7 @@ package com.udacity.jwdnd.course1.cloudstorage.services;
 
 import com.udacity.jwdnd.course1.cloudstorage.mapper.CredentialMapper;
 import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +10,10 @@ import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.List;
 
+@Slf4j
 @Service
 public class CredentialService {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     public final static String TAG_ = "CredentialServic";
     private final UserService userService;
     private final CredentialMapper credentialMapper;
@@ -39,7 +38,7 @@ public class CredentialService {
     public int editCredential(Credential credential){
         if(credential.getKey()==null || credential.getKey().equals("")){
             String key = this.credentialMapper.getKey(credential.getCredentialId());
-            LOGGER.debug(TAG_ + " getKey: " + key);
+            log.debug(TAG_ +  "-> getKey: " + key);
             credential.setPassword(encryptionService.encryptValue(credential.getPassword(),key));
         }
         return this.credentialMapper.update(credential);

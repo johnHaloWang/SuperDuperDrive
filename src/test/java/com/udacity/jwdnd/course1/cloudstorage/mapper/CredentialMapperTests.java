@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import com.udacity.jwdnd.course1.cloudstorage.model.*;
-//import com.udacity.jwdnd.course1.cloudstorage.utils.TestConstant;
 
 import java.util.List;
 import java.util.Locale;

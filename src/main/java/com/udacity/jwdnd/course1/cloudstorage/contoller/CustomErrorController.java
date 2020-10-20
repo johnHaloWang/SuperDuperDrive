@@ -1,23 +1,20 @@
 package com.udacity.jwdnd.course1.cloudstorage.contoller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 
+@Slf4j
 @Controller
 public class CustomErrorController implements ErrorController {
 
     private static final String PATH = "/error";
-    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     public final static String TAG_ = "CustomErrorController";
 
     @RequestMapping("/error")
@@ -33,22 +30,22 @@ public class CustomErrorController implements ErrorController {
                 pageTitle = "Page Not Found";
                 errorMsg = "404 Error --- Page Can't be Found";
                 errorPage = "error";
-                LOGGER.error("Error 404");
+                log.error(TAG_+ "-> Error 404");
             }else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
                 pageTitle = "Internal Server Error";
                 errorMsg = "500 Error --- Internal Server Error";
                 errorPage = "error";
-                LOGGER.error("Error 500");
+                log.error(TAG_+ "-> Error 500");
             } else if (statusCode == HttpStatus.FORBIDDEN.value()) {
                 pageTitle = "Forbidden";
                 errorMsg = "406 Error --- Page is Forbidden";
                 errorPage = "error";
-                LOGGER.error("Error 406");
+                log.error(TAG_ + "-> Error 406");
             }else{
                 pageTitle = "Error";
                 errorMsg = String.valueOf(statusCode) + " Error";
                 errorPage = "error";
-                LOGGER.error("Error other");
+                log.error(TAG_ + "-> Error other");
             }
         }
         model.addAttribute("pageTitle", pageTitle);
@@ -59,7 +56,8 @@ public class CustomErrorController implements ErrorController {
 
     @Override
     public String getErrorPath() {
-        LOGGER.debug("call... getErrorPath function");
+        //LOGGER.debug("call... getErrorPath function");
+        log.debug(TAG_ + "-> call... getErrorPath function");
         return "/error";
     }
 }

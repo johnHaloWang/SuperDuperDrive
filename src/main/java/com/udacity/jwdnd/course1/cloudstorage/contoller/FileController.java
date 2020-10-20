@@ -4,8 +4,7 @@ import com.udacity.jwdnd.course1.cloudstorage.model.File;
 import com.udacity.jwdnd.course1.cloudstorage.model.FileForm;
 import com.udacity.jwdnd.course1.cloudstorage.services.FileService;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +19,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+@Slf4j
 @Controller
 @RequestMapping("/file")
 public class FileController implements HandlerExceptionResolver {
-    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     public final static String TAG_ = "FileController";
     private final FileService fileService;
 
@@ -35,14 +34,14 @@ public class FileController implements HandlerExceptionResolver {
 
     @PostMapping("/add")
     public String postFile(FileForm fileForm, Model model, HttpSession session) {
-        LOGGER.debug(TAG_ + " add method");
+        log.debug(TAG_ + "-> add method");
         String errorMsgStr = "";
         int userId = (int) session.getAttribute("userId");
         if (fileForm.getFileId() == null || fileForm.getFileId().equals("")) {
-            LOGGER.debug(TAG_ + " add new file method");
+            log.debug(TAG_ + "-> add new file method");
             if (!this.fileService.isDupicateFileName(userId, fileForm.getFileEntity().getOriginalFilename())) {
                 if (fileForm.getFileEntity().getOriginalFilename() == null || fileForm.getFileEntity().getOriginalFilename().equals("")) {
-                    LOGGER.debug(TAG_ + " add new file method the file is null");
+                    log.debug(TAG_ + "-> add new file method the file is null");
                     errorMsgStr = "Please select a file!";
                     model.addAttribute("errorResultMessage", errorMsgStr);
                     return "result";
@@ -51,27 +50,26 @@ public class FileController implements HandlerExceptionResolver {
                 try {
                     addRow = this.fileService.addFile(fileForm.getFileEntity(), userId);
                 } catch (Exception e) {
-                    LOGGER.debug("TESTING");
                     addRow = -1;
                 }
                 if (addRow != 1) {
-                    LOGGER.debug(TAG_ + " add new file failed");
+                    log.debug(TAG_ + "-> add new file failed");
                     model.addAttribute("errorResult", true);
                     errorMsgStr = "New file failed to add";
                     model.addAttribute("errorResultMessage", errorMsgStr);
                 } else {
-                    LOGGER.debug(TAG_ + " add new file success");
+                    log.debug(TAG_ + "-> add new file success");
                     model.addAttribute("successResult", true);
                 }
             } else {
-                LOGGER.debug(TAG_ + " add new file failed");
+                log.debug(TAG_ + "-> add new file failed");
                 model.addAttribute("errorResult", true);
                 errorMsgStr = "This file already exist";
                 model.addAttribute("errorResultMessage", errorMsgStr);
             }
 
         } else {
-            LOGGER.debug(TAG_ + " update/edit file method");
+            log.debug(TAG_ + "-> update/edit file method");
             int updateRow;
             try {
                 updateRow = fileService.updateFile(fileForm.getFileEntity(), userId, Integer.parseInt(fileForm.getFileId()));
@@ -80,13 +78,13 @@ public class FileController implements HandlerExceptionResolver {
             }
             if (updateRow != 1) {
                 model.addAttribute("errorResult", true);
-                LOGGER.debug(TAG_ + " update/edit file failed");
+                log.debug(TAG_ + "-> update/edit file failed");
                 errorMsgStr = "File failed to update/edit";
                 model.addAttribute("errorResultMessage", errorMsgStr);
 
             } else {
                 model.addAttribute("successResult", true);
-                LOGGER.debug(TAG_ + " update/edit file success");
+                log.debug(TAG_ + "-> update/edit file success");
             }
         }
         model.addAttribute("fileForm", new FileForm());
@@ -96,7 +94,7 @@ public class FileController implements HandlerExceptionResolver {
 
     @GetMapping("/delete")
     public String deleteFile(@RequestParam(name = "fileId") String fileId, Model model) {
-        LOGGER.debug("Calling file controller delete method with fileId: " + fileId);
+        log.debug(TAG_ + "-> Calling file controller delete method with fileId: " + fileId);
         int delRow = this.fileService.deleteFile(Integer.parseInt(fileId));
         if (delRow == 1) {
             model.addAttribute("successResult", true);
@@ -118,7 +116,7 @@ public class FileController implements HandlerExceptionResolver {
 
     @Override
     public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) {
-        LOGGER.debug(TAG_ + " file exceed max size limit");
+        log.debug(TAG_ + " file exceed max size limit");
         ModelAndView modelAndView = new ModelAndView("result");
         if (e instanceof MaxUploadSizeExceededException) {
             modelAndView.getModel().put("errorResultMessage", "File size exceeds limit!");

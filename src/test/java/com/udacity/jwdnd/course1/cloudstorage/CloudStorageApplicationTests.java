@@ -1,6 +1,7 @@
 package com.udacity.jwdnd.course1.cloudstorage;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -11,9 +12,9 @@ import org.springframework.boot.web.server.LocalServerPort;
 
 import java.util.Locale;
 
+@Slf4j
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class CloudStorageApplicationTests {
-	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 	public final static String TAG_ = "CloudStorageApplicationTests";
 
 	@LocalServerPort
@@ -72,6 +73,4 @@ class CloudStorageApplicationTests {
 		Assertions.assertEquals("Login", driver.getTitle());
 
 	}
-
-
 }

@@ -2,16 +2,15 @@ package com.udacity.jwdnd.course1.cloudstorage.services;
 
 import com.udacity.jwdnd.course1.cloudstorage.mapper.UserMapper;
 import com.udacity.jwdnd.course1.cloudstorage.model.User;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
 import java.util.Base64;
 
+@Slf4j
 @Service
 public class UserService {
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
     public final static String TAG_ = "UserService";
     private final UserMapper userMapper;
     private final HashService hashService;

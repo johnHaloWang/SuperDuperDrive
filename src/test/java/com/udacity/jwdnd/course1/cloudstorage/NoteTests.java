@@ -7,6 +7,7 @@ import com.udacity.jwdnd.course1.cloudstorage.pages.*;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
 import com.udacity.jwdnd.course1.cloudstorage.utils.TestConstant;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -27,6 +28,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 
 import java.util.Locale;
 
+@Slf4j
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(Lifecycle.PER_CLASS)
@@ -34,12 +36,12 @@ public class NoteTests {
 
     @Autowired
     private UserService userService;
+
     @LocalServerPort
     private int port;
 
     private WebDriver driver;
     public static String BASEURL;
-    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     public final static String TAG_ = "NoteTests";
 
     private SignupPage signupPage;

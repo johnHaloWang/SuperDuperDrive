@@ -1,7 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage.pages;
 
-import com.udacity.jwdnd.course1.cloudstorage.services.HashService;
-import org.openqa.selenium.By;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,11 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-
+@Slf4j
 public class FilePage {
 
-
-    final private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     public final static String TAG_ = "FilePage";
     //LOGGER.debug(FilePage.TAG_ + " find description: " + rst);
 
@@ -62,13 +59,11 @@ public class FilePage {
     private WebElement addBtn;
 
     public void addFile(WebDriver driver, String filePath){
-        LOGGER.debug(TAG_ + " testing file: " + filePath );
+        //LOGGER.debug(TAG_ + " testing file: " + filePath );
+        log.debug(TAG_ + "-> testing file: " + filePath );
         WebDriverWait wait = new WebDriverWait(driver, 30);
-        LOGGER.debug("step1");
         wait.until(ExpectedConditions.visibilityOf(fileUpload)).sendKeys(filePath);
-        LOGGER.debug("step2");
         wait.until(ExpectedConditions.visibilityOf(addBtn)).click();
-        LOGGER.debug("step3");
     }
 
     @FindBy(id="file-delete-btn")
